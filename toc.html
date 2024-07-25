@@ -7,7 +7,8 @@
   </div>
 
   {% macro toc_item(item) %}
-    {%- if item.level <= config.theme.navigation_depth %}
+  {%- if item.level <= config.theme.navigation_depth %}
+  {%-   set x = toc_list.append(item.url) %}
       <li class="nav-item" data-level="{{ item.level }}"><a href="{{ item.url }}" class="nav-link">{{ item.title }}</a>
         <ul class="nav flex-column">
           {%- for child in item.children %}
@@ -19,6 +20,7 @@
   {%- endmacro %}
   {% set toc_f = page.toc|first %}
   {% set toc_l = page.toc|length %}
+  {% set toc_list = [] %}
   {% if toc_l > 1 or toc_f.children|length %}
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary"  style="margin-bottom: 1em;">
       <ul class="nav flex-column">
@@ -50,7 +52,27 @@
   <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
     <ul class="nav flex-column">
     {%- for item in nav %}
-        {{ nav_item(item,page) }}
+      {{ nav_item(item,page) }}
+    {%- endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% if config.extra.nav is defined and toc_list|length < config.extra.min_toc|default(6) %}
+  <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+    <ul class="nav flex-column">
+    {%- for title,url in config.extra.nav.items() %}
+      <li class="nav-item">
+        {% if url is not none %}
+        <a href="{{ config.site_url }}{{ url }}" class="nav-link">{{ title }}</a>
+        {% else %}
+        <a class="nav-link">{{ title }}</a>
+      {% endif %}
+      {% if loop.first %}
+      <ul class="nav flex-column">
+      {% endif %}
+      {% if loop.last %}
+      </ul>
+      {% endif %}
     {%- endfor %}
     </ul>
   </div>
