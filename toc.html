@@ -77,4 +77,15 @@
     </ul>
   </div>
   {% endif %}
+  {% if page and page.edit_url %}
+  <div class="navbar-collapse card bg-secondary">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="{{ page.edit_url }}" class="nav-link">
+          <i class="fa-brands fa-github"></i> View on GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+  {% endif %}
 </div>
