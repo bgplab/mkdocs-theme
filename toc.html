@@ -22,7 +22,7 @@
   {% set toc_l = page.toc|length %}
   {% set toc_list = [] %}
   {% if toc_l > 1 or toc_f.children|length %}
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary"  style="margin-bottom: 1em;">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary" style="margin-bottom: 1em;">
       <ul class="nav flex-column">
       {%- for item in page.toc %}
           {{ toc_item(item) }}
@@ -49,7 +49,7 @@
     {% endif %}
   {%- endmacro %}
   {% if config.extra.toc_sidebar|default(True) %}
-  <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+  <div class="navbar-collapse collapse card bg-secondary" style="margin-bottom: 1em;">
     <ul class="nav flex-column">
     {%- for item in nav %}
       {{ nav_item(item,page) }}
@@ -58,7 +58,7 @@
   </div>
   {% endif %}
   {% if config.extra.nav is defined and toc_list|length < config.extra.min_toc|default(6) %}
-  <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+  <div class="navbar-collapse collapse card bg-secondary" style="margin-bottom: 1em;">
     <ul class="nav flex-column">
     {%- for title,url in config.extra.nav.items() %}
       <li class="nav-item">
@@ -77,8 +77,29 @@
     </ul>
   </div>
   {% endif %}
+  {% if config.extra.other is defined and toc_list|length < config.extra.min_toc|default(6) %}
+  <div class="navbar-collapse collapse card bg-secondary" style="margin-bottom: 1em;">
+    <ul class="nav flex-column">
+      <li class="nav-item"><a>Other Open-Source Labs</a></li>
+    {%- for title,url in config.extra.other.items() %}
+      {% if loop.first %}
+      <ul class="nav flex-column">
+      {% endif %}
+      <li class="nav-item">
+        {% if url is not none %}
+        <a href="{{ url }}" class="nav-link">{{ title }}</a>
+        {% else %}
+        <a class="nav-link">{{ title }}</a>
+      {% endif %}
+      {% if loop.last %}
+      </ul>
+      {% endif %}
+    {%- endfor %}
+    </ul>
+  </div>
+  {% endif %}
   {% if page and page.edit_url %}
-  <div class="navbar-collapse card bg-secondary">
+  <div class="navbar-collapse card bg-secondary" style="margin-bottom: 1em;">
     <ul class="nav flex-column">
       <li class="nav-item">
         <a href="{{ page.edit_url }}" class="nav-link">
