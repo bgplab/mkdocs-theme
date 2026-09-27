@@ -57,7 +57,7 @@
     </ul>
   </div>
   {% endif %}
-  {% if config.extra.nav is defined and toc_list|length < config.extra.min_toc|default(6) %}
+  {% if config.extra.nav is defined and toc_list|length < config.extra.min_extra_toc|default(6) %}
   <div class="navbar-collapse collapse card bg-secondary" style="margin-bottom: 1em;">
     <ul class="nav flex-column">
     {%- for title,url in config.extra.nav.items() %}
@@ -77,7 +77,7 @@
     </ul>
   </div>
   {% endif %}
-  {% if config.extra.other is defined and toc_list|length < config.extra.min_toc|default(6) %}
+  {% if config.extra.other is defined and toc_list|length < config.extra.min_other_toc|default(6) %}
   <div class="navbar-collapse collapse card bg-secondary" style="margin-bottom: 1em;">
     <ul class="nav flex-column">
       <li class="nav-item"><a>Other Open-Source Labs</a></li>
